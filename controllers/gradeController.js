@@ -1,26 +1,24 @@
 import { db } from '../models/index.js';
-import { logger } from '../config/logger.js';
+//import { logger } from '../config/logger.js';
 
 const Grade = db.grade;
 
 const create = async (req, res) => {
-
   const grade = new Grade({
     name: req.body.name,
     subject: req.body.subject,
     type: req.body.type,
-    value: req.body.value
-
-  })
+    value: req.body.value,
+  });
   try {
-    await grade.save(grade)
-    res.send({ message: "Grade salva com sucesso!" });
-    logger.info(`POST /grade - ${JSON.stringify()}`);
+    await grade.save(grade);
+    res.send({ message: 'Grade salva com sucesso!' });
+    //   logger.info(`POST /grade - ${JSON.stringify()}`);
   } catch (error) {
     res
       .status(500)
       .send({ message: error.message || 'Algum erro ocorreu ao salvar' });
-    logger.error(`POST /grade - ${JSON.stringify(error.message)}`);
+    //   logger.error(`POST /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -33,14 +31,14 @@ const findAll = async (req, res) => {
     : {};
 
   try {
-    const data = await Grade.find(condition)
-    res.send(data)
-    logger.info(`GET /grade`);
+    const data = await Grade.find(condition);
+    res.send(data);
+    //  logger.info(`GET /grade`);
   } catch (error) {
     res
       .status(500)
       .send({ message: error.message || 'Erro ao listar todos os documentos' });
-    logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
+    //  logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -48,16 +46,16 @@ const findOne = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await Grade.findById({ _id: id })
+    const data = await Grade.findById({ _id: id });
     if (!data) {
-      res.status(400).send(`Grade ${id} não encontrado!`)
+      res.status(400).send(`Grade ${id} não encontrado!`);
     } else {
       res.send(data);
     }
-    logger.info(`GET /grade - ${id}`);
+    //   logger.info(`GET /grade - ${id}`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
-    logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
+    //  logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -71,20 +69,20 @@ const update = async (req, res) => {
   const id = req.params.id;
 
   try {
-
-    const data = await Grade.findByIdAndUpdade({ _id: id }, req.body, { new: true })
+    const data = await Grade.findByIdAndUpdade({ _id: id }, req.body, {
+      new: true,
+    });
 
     if (!data) {
-      res.status(400).send(`Grade ${id} não encontrado para atualização!`)
+      res.status(400).send(`Grade ${id} não encontrado para atualização!`);
     } else {
       res.send({ message: `Grade ${id} atualizado com sucesso` });
     }
 
-    logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
-
+    //  logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao atualizar a Grade id: ' + id });
-    logger.error(`PUT /grade - ${JSON.stringify(error.message)}`);
+    //   logger.error(`PUT /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -92,21 +90,20 @@ const remove = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await Grade.findByIdAndDelete({ _id: id })
+    const data = await Grade.findByIdAndDelete({ _id: id });
 
     if (!data) {
-      res.status(400).send(`Grade ${id} não encontrado para remover!`)
+      res.status(400).send(`Grade ${id} não encontrado para remover!`);
     } else {
       res.send({ message: `Grade ${id} removido com sucesso` });
-    };
+    }
 
-    logger.info(`DELETE /grade - ${id}`);
-
+    //  logger.info(`DELETE /grade - ${id}`);
   } catch (error) {
     res
       .status(500)
       .send({ message: 'Nao foi possivel deletar o Grade id: ' + id });
-    logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
+    //  logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -114,19 +111,18 @@ const removeAll = async (req, res) => {
   const id = req.params.id;
 
   try {
-
-    const data = await Grade.deleteMany()
+    const data = await Grade.deleteMany();
 
     if (!data) {
-      res.status(400).send(`Grades não encontrado para remover!`)
+      res.status(400).send(`Grades não encontrado para remover!`);
     } else {
       res.send({ message: `Grades removidos com sucesso!!` });
-    };
+    }
 
-    logger.info(`DELETE /grade`);
+    //   logger.info(`DELETE /grade`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao excluir todos as Grades' });
-    logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
+    //   logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
