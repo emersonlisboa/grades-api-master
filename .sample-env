@@ -1,2 +1,2 @@
-MONGODB=
-PORT=
+MONGODB= mongodb+srv://emerson:2303erso@cluster0-tm2co.mongodb.net/IGTI_desafio4?retryWrites=true&w=majority
+PORT=8081
